@@ -1,0 +1,5 @@
+docker build -t app:task .
+docker build -t database:task -f database .
+docker network create app
+docker run --network=app -d --name a2 -e MYSQL_USER=petclinic -e MYSQL_PASSWORD=petclinic -e MYSQL_ROOT_PASSWORD=root -e MYSQL_DATABASE=petclinic -p 3306:3306 database:task
+docker run --network=app --name a1 -p 8080:8080 app:task java -jar target/*.jar --debug
